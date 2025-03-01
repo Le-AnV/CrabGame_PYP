@@ -1,1 +1,1 @@
-# Lấy code từ DEMO.py, ảnh ở image/
+Lấy code về chạy với, đọc đi các em
