@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-Lấy code về chạy với, đọc đi các em
-=======
 Game/
 ├── **pycache**/
 ├── image/
@@ -18,5 +15,3 @@ Game/
 ├── game.py # Logic trò chơi
 ├── main.py # Entry point
 └── ui.py # Giao diện người dùng
-
-> > > > > > > 5e1c004 (big update)
