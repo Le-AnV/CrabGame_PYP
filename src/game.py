@@ -30,9 +30,9 @@ class Game:
 
         # Background cho từng level
         self.backgrounds = [
-            pygame.image.load("Game/image/beach1.jpg"),
-            pygame.image.load("Game/image/beach2.jpg"),
-            pygame.image.load("Game/image/beach3.jpg"),
+            pygame.image.load("Game\\image\\background_bien.png"),
+            pygame.image.load("Game\\image\\background_bien.png"),
+            pygame.image.load("Game\\image\\background_bien.png"),
         ]
 
         # Resize background
@@ -43,15 +43,17 @@ class Game:
 
         # Load hình ảnh cho các vật thể
         self.obstacle_bad1 = pygame.image.load(
-            "Game/image/bad1.png"
+            "Game\\image\\biohazard.png"
         )  # vật thể trừ 1 mạng
         self.obstacle_bad2 = pygame.image.load(
-            "Game/image/bad2.png"
+            "Game\\image\\biohazard.png"
         )  # vật thể trừ 2 mạng
         self.item_boost = pygame.image.load(
-            "Game/image/boost.png"
+            "Game\\image\\biohazard.png"
         )  # vật thể tăng tốc độ
-        self.item_point = pygame.image.load("Game/image/point.png")  # vật thể tăng điểm
+        self.item_point = pygame.image.load(
+            "Game\\image\\shell.png"
+        )  # vật thể tăng điểm
 
         # Resize các vật thể
         self.obstacle_bad1 = pygame.transform.scale(self.obstacle_bad1, (50, 50))
@@ -102,9 +104,8 @@ class Game:
             elif self.crab_x > self.WIDTH - 80:
                 self.crab_x = 0
 
-            self.spawn_obstacles()
-            self.move_obstacles()
-            self.check_collisions()
+            self.spawn_obstacles()  # Removed duplicate call
+            self.check_collisions()  # Ensure this method is implemented
 
             # Draw crab
             self.screen.blit(self.crab, (self.crab_x, self.crab_y))
@@ -158,3 +159,51 @@ class Game:
             total = bad1_prob + bad2_prob + boost_prob + point_prob
             bad1_prob /= total
             bad2_prob /= total
+            boost_prob /= total
+            point_prob /= total
+
+            if rand < bad1_prob:
+                self.obstacles.append([x, 0, 1])
+            elif rand < bad1_prob + bad2_prob:
+                self.obstacles.append([x, 0, 2])
+            elif rand < bad1_prob + bad2_prob + boost_prob:
+                self.obstacles.append([x, 0, 3])
+            else:
+                self.obstacles.append([x, 0, 4])
+
+    def check_collisions(self):
+        for obstacle in self.obstacles[:]:
+            obstacle[1] += self.obstacle_speed  # Move obstacle down
+
+            # Check collision with crab
+            if (
+                self.crab_x < obstacle[0] + 50
+                and self.crab_x + 80 > obstacle[0]
+                and self.crab_y < obstacle[1] + 50
+                and self.crab_y + 60 > obstacle[1]
+            ):
+                if obstacle[2] == 1:  # bad1
+                    self.lives -= 1
+                elif obstacle[2] == 2:  # bad2
+                    self.lives -= 2
+                elif obstacle[2] == 3:  # boost
+                    self.speed_boost_active = True
+                    self.crab_speed = 20
+                    self.speed_boost_end_time = time.time() + self.boost_duration
+                elif obstacle[2] == 4:  # point
+                    self.score += 10
+
+                self.obstacles.remove(obstacle)
+
+            # Remove obstacles that go off-screen
+            if obstacle[1] > self.HEIGHT:
+                self.obstacles.remove(obstacle)
+
+        # Check game over
+        if self.lives <= 0:
+            self.running = False
+
+        # Level up
+        if self.score >= self.level * self.level_threshold:
+            self.level += 1
+            self.obstacle_speed += 1

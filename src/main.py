@@ -2,6 +2,8 @@ import pygame
 import os
 from ui import main_menu
 
+# from image import *
+
 
 def check_resources():
     """Kiểm tra các thư mục và tệp cần thiết"""
@@ -30,25 +32,28 @@ def main():
 
     # Danh sách file ảnh cần có
     required_images = [
-        "crab.png",
-        "bad1.png",
-        "bad2.png",
-        "boost.png",
-        "point.png",
-        "beach1.jpg",
-        "beach2.jpg",
-        "beach3.jpg",
-        "menu_bg.jpg",
+        "Game\\image\\crab.png",  # crab
+        "Game\\image\\biohazard.png",  # bag1
+        "Game\\image\\biohazard.png",  # bag2
+        "Game\\image\\shell.png",  # boost
+        "Game\\image\\shell.png",  # point
+        "Game\\image\\background_bien.png",  # beach1
+        "Game\\image\\background_bien.png",  # beach2
+        "Game\\image\\background_bien.png",  # beach3
+        "Game\\image\\background_bien.png",  # menu background
     ]
 
     # Thông báo về các file ảnh cần thêm
     missing_images = [
-        img for img in required_images if not os.path.exists(f"Game/image/{img}")
-    ]
+        img
+        for img in required_images
+        if not os.path.exists(img.replace("Game\\image\\", "Game/image/"))
+    ]  # Fixed path handling
     if missing_images:
         print("Vui lòng thêm các file ảnh sau vào thư mục Game/image:")
         for img in missing_images:
-            print(f"- {img}")
+            print(f"- {img.replace('Game\\image\\', '')}")
+        return  # Exit if resources are missing
 
     # Chạy menu chính
     main_menu()

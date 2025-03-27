@@ -57,7 +57,7 @@ def main_menu():
     pygame.display.set_caption("Crab Dodge Game")
 
     # Load và scale background cho menu
-    bg_image = pygame.image.load("Game/image/menu_bg.jpg")
+    bg_image = pygame.image.load("Game/image/background_bien.png")
     bg_image = pygame.transform.scale(bg_image, (WIDTH, HEIGHT))
 
     # Font cho menu
@@ -115,7 +115,7 @@ def main_menu():
                         )  # Override player name method
                         game.run()
                     elif button["text"] == "High Scores":
-                        get_high_scores(screen)
+                        display_high_scores(screen)  # Fixed function call
                     elif button["text"] == "Exit":
                         running = False
             else:
@@ -135,7 +135,7 @@ def get_player_name(screen):
     WIDTH, HEIGHT = 800, 600
 
     # Load và scale background cho menu input name
-    bg_image = pygame.image.load("Game/image/menu_bg.jpg")
+    bg_image = pygame.image.load("Game/image/background_bien.png")
     bg_image = pygame.transform.scale(bg_image, (WIDTH, HEIGHT))
 
     font = pygame.font.Font(None, 32)
@@ -170,3 +170,51 @@ def get_player_name(screen):
         input_box.update()
 
         screen.blit(bg_image, (0, 0))
+        screen.blit(title_text, title_rect)
+        input_box.draw(screen)
+        pygame.draw.rect(screen, (0, 102, 204), button_rect, border_radius=10)
+        screen.blit(button_text, button_text_rect)
+
+        pygame.display.flip()
+
+    return name
+
+
+def display_high_scores(screen):
+    scores = get_high_scores()
+    WIDTH, HEIGHT = 800, 600
+
+    # Load and scale background
+    bg_image = pygame.image.load("Game/image/background_bien.png")
+    bg_image = pygame.transform.scale(bg_image, (WIDTH, HEIGHT))
+
+    font = pygame.font.Font(None, 36)
+    title_font = pygame.font.Font(None, 50)
+
+    title_text = title_font.render("High Scores", True, (255, 255, 255))
+    title_rect = title_text.get_rect(center=(WIDTH // 2, 50))
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                running = False
+
+        screen.blit(bg_image, (0, 0))
+        screen.blit(title_text, title_rect)
+
+        if scores.empty:
+            no_scores_text = font.render(
+                "No high scores available.", True, (255, 255, 255)
+            )
+            screen.blit(no_scores_text, (WIDTH // 2 - 150, HEIGHT // 2))
+        else:
+            for i, row in scores.iterrows():
+                score_text = font.render(
+                    f"{i + 1}. {row['Name']} - {row['Score']}", True, (255, 255, 255)
+                )
+                screen.blit(score_text, (WIDTH // 2 - 150, 100 + i * 40))
+
+        pygame.display.flip()
