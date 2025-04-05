@@ -1,0 +1,28 @@
+{
+  "IMAGES": {
+    "backgrounds": [
+      "assets/image/bg/bg_beach.png",
+      "assets/image/bg/bg_roundTwo.png",
+      "assets/image/bg/bg_beach3.png"
+    ],
+    "crab": "assets/image/obj/obj_crab.png",
+    "obstacles": {
+      "bad1": "assets/image/obj/enemy_brokenBottle.png",
+      "bad2": "assets/image/obj/enemy_biohazard.png",
+      "boost": "assets/image/obj/obj_speedUp.png",
+      "point": "assets/image/obj/obj_upPoint.png"
+    },
+    "heart": "assets/image/obj/obj_heart.png",
+    "menu_background": "assets/image/bg/bg_intro.png",
+    "score_background": "assets/image/bg/bg_score.png"
+  },
+  "SOUNDS": {
+    "background_music": "assets/sounds/bgGame_sound.mp3",
+    "game_over": "assets/sounds/lose.wav",
+    "click": "assets/sounds/click_button.wav",
+    "get_coin": "assets/sounds/getCoin.wav",
+    "speed_boost": "assets/sounds/upSpeed_sound.wav",
+    "bad_object": "assets/sounds/enemyHit_sound.mp3",
+    "intro_music": "assets/sounds/introGame_sound.wav"
+  }
+}

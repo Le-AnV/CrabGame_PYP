@@ -1,0 +1,40 @@
+{
+  "GAME_SETTINGS": {
+    "width": 800,
+    "height": 600,
+    "initial_lives": 3,
+    "initial_score": 0,
+    "level_threshold": 70,
+    "crab_speed": 7,
+    "obstacle_speed": 5,
+    "boost_duration": 5,
+    "boosted_crab_speed": 20,
+    "point_value": 10,
+    "speed_increment": 1
+  },
+  "OBJECT_PROPERTIES": {
+    "obstacle_sizes": {
+      "width": 50,
+      "height": 50
+    },
+    "crab_size": {
+      "width": 100,
+      "height": 80
+    },
+    "heart_size": {
+      "width": 30,
+      "height": 30
+    },
+    "heart_spacing": 35,
+    "item_sizes": {
+      "width": 50,
+      "height": 50
+    }
+  },
+  "SPAWN_PROBABILITIES": {
+    "bad1": 0.4,
+    "bad2": 0.1,
+    "boost": 0.15,
+    "point": 0.35
+  }
+}
