@@ -8,7 +8,7 @@
     "crab_speed": 7,
     "obstacle_speed": 5,
     "boost_duration": 5,
-    "boosted_crab_speed": 20,
+    "boosted_crab_speed": 10,
     "point_value": 10,
     "speed_increment": 1
   },

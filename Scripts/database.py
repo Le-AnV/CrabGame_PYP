@@ -29,7 +29,7 @@ def connect_db():
         return None
 
 
-# luu du lieu diem nguoi choi ve db
+# Lưu điểm của người chơi vào db
 def save_score(name, score):
     conn = connect_db()
     if conn:
@@ -47,16 +47,19 @@ def save_score(name, score):
 
 
 def get_high_scores():
+    # Lấy dữ liệu người chơi top 5 có điểm cao nhất
     conn = connect_db()
     if conn:
         try:
             cur = conn.cursor()
-            cur.execute("SELECT * FROM top_member ORDER BY score DESC LIMIT 5")
+            cur.execute(
+                "SELECT member_name, score FROM top_member ORDER BY score DESC LIMIT 5"
+            )
             scores = cur.fetchall()
-            return pd.DataFrame(scores, columns=["STT", "Name", "Score"])
+            return pd.DataFrame(scores, columns=["Name", "Score"])
         except psycopg2.Error as e:
             print(f"Error fetching high scores: {e}")
-            return pd.DataFrame(columns=["STT", "Name", "Score"])
+            return pd.DataFrame(columns=["Name", "Score"])
         finally:
             conn.close()
-    return pd.DataFrame(columns=["STT", "Name", "Score"])
+    return pd.DataFrame(columns=["Name", "Score"])
